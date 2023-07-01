@@ -1,4 +1,16 @@
-.loquierorojo {
-    color: red !important;
-    border: solid 1px red !important;
+body {
+    background-color: rgb(8, 8, 8)!important;
+    color: rgb(255, 255, 255)!important;
+}
+
+.publicacion {
+    border: 1px solid rgb(43, 43, 43)!important;
+}
+
+input {
+    background-color: rgb(8, 8, 8) !important;
+}
+
+nav{
+    border-bottom: 1px solid rgb(89, 89, 89);
 }
