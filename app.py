@@ -36,7 +36,7 @@ class Comentario(db.Model):
         db.String(100),
         nullable=False
     )
-    pais = db.Column(
+    publicacion = db.Column(
         db.Integer,
         db.ForeignKey('publicacion.id'),
         nullable=False
@@ -46,30 +46,30 @@ class Comentario(db.Model):
         return self.name
 
 @app.context_processor 
-def inject_paises():
+def inject_posteos():
     publicaciones = db.session.query(Publicacion).all()
     return  dict(
-        paises=publicaciones  #esto va a estar disponible en todos los templates
+        publicaciones=publicaciones  #esto va a estar disponible en todos los templates
     )
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/agregar_pais', methods = ["POST"])
+@app.route('/agregar_publicacion', methods = ["POST"])
 def nuevo_posteo():
     if request.method == "POST": 
-        autor = request.form["nombre"]    # llama al retorno del form nombre 
+        autor = request.form["autor"]    # llama al retorno del form autor 
         descripcion = request.form["descripcion"]
-        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion)   # crea un pais asignandole el nombre que fue obtenido arriba
+        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion)   # crea un post asignando nombre del autor y el post en si
         db.session.add(nuevo_posteo)              # agrega el cambio
         db.session.commit()                     # lo commitea
         return redirect(url_for("index"))       # recarga index, hace que todo se actualice de forma automatica
 
-@app.route("/borrar_pais/<id>")
-def borrar_pais(id):
-    pais = Publicacion.query.get(id)   # busca el pais que coinsida con el id de la url
-    db.session.delete(pais)     # lo borra
+@app.route("/borrar_publicacion/<id>")
+def borrar_publicacion(id):
+    publicacion = Publicacion.query.get(id)   # busca el post que coinsida con el id de la url
+    db.session.delete(publicacion)     # lo borra
     db.session.commit()         # lo commitea
     return redirect(url_for("index"))   
 

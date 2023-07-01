@@ -8,11 +8,11 @@ Inicio
 <div class="row p-5">
 
     <div class="col-6">
-        <h3>ingrese nuevo pais </h3>
-        <form action="/agregar_pais" method="POST">
-            <label for="nombre">nonbre</label>
-            <input class="form-control" type="text" name="nombre" placeholder="Argentina">
-            <input class="form-control" type="text" name="descripcion" placeholder="descripcion">
+        <h3>postea algo</h3>
+        <form action="/agregar_publicacion" method="POST">
+            <label for="autor">nonbre</label>
+            <input class="form-control" type="text" name="autor" placeholder="Jhon Doe">
+            <input class="form-control" type="text" name="descripcion" placeholder="Tengo hambre">
             <button type="submit" class="btn btn-submit btn-success mt-3">
                 agegar
             </button>
@@ -32,12 +32,12 @@ Inicio
             </thead>
 
             <tbody>
-                {% for pais in paises %}
+                {% for publicacion in publicaciones %}
                 <tr>
-                    <td scope="row">{{pais.nombre}}</td>
-                    <td scope="row">{{pais.descripcion}}</td>
+                    <td scope="row">{{publicacion.autor}}</td>
+                    <td scope="row">{{publicacion.descripcion}}</td>
                     <td>
-                        <a href="/borrar_pais/{{pais.id}}" class="btn-btn-danger">Borrar</a>
+                        <a href="/borrar_publicacion/{{publicacion.id}}" class="btn-btn-danger">Borrar</a>
                     </td>
                 </tr>
                 {%endfor%}
@@ -46,5 +46,23 @@ Inicio
         </table>
 
     </div>
+    <section class="border-bottom mb-3">
+        <p class="text-center"><strong>Comments: 3</strong></p>
+        <div class="row mb-4">
+            <div class="col-2">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
+                    class="img-fluid shadow-1-strong rounded-5" alt="" />
+            </div>
+
+            <div class="col-10">
+                <p class="mb-2"><strong>Marta Dolores</strong></p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                </p>
+            </div>
+        </div>
+    </section>
 </div>
 {%endblock%}

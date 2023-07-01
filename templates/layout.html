@@ -22,8 +22,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId"> 
-                    {% for pais in paises %}
-                        <a class="dropdown-item" href="#">{{pais.nombre}}</a>
+                    {% for publicacion in publicaciones %}
+                        <a class="dropdown-item" href="#">{{publicacion.autor}}</a>
                     {% endfor %}
                     </div>
                 </li>
