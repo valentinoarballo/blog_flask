@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/alchemy'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/blog'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -36,68 +36,6 @@ class Provincia(db.Model):
         db.Integer,
         db.ForeignKey('pais.id'),
         nullable=False
-    )
-
-    def __str__(self):
-        return self.name
-
-class Localidad(db.Model):
-    __tablename__ = 'localidad'
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-    nombre = db.Column(
-        db.String(100),
-        nullable=False
-    )
-    provincia = db.Column(
-        db.Integer,
-        db.ForeignKey('provincia.id'),
-        nullable=False
-    )
-
-    def __str__(self):
-        return self.name
-
-class Persona(db.Model):
-    __tablename__ = 'persona'
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-    nombre = db.Column(
-        db.String(100),
-        nullable=False
-    )
-    apellido = db.Column(
-        db.String(100),
-        nullable=False
-    )
-    email = db.Column(
-        db.String(100),
-        nullable=True
-    )
-    telefono = db.Column(
-        db.Integer,
-        nullable=True
-    )
-    domicilio = db.Column(
-        db.String(100),
-        nullable=False
-    )
-    fech_naci = db.Column(
-        db.Date,
-        nullable=False
-    )
-    activo = db.Column(
-        db.Boolean,
-        nullable=False
-    )
-    localidad = db.Column(
-        db.Integer,
-        db.ForeignKey('localidad.id'),
-        nullable = False
     )
 
     def __str__(self):
