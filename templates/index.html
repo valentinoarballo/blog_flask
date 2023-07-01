@@ -12,6 +12,7 @@ Inicio
         <form action="/agregar_pais" method="POST">
             <label for="nombre">nonbre</label>
             <input class="form-control" type="text" name="nombre" placeholder="Argentina">
+            <input class="form-control" type="text" name="descripcion" placeholder="descripcion">
             <button type="submit" class="btn btn-submit btn-success mt-3">
                 agegar
             </button>
@@ -21,22 +22,27 @@ Inicio
     <div class="col-6">
 
         <table class="table">
+
             <thead>
                 <tr>
-                    <th>pais</th>
+                    <th>post</th>
+                    <th>descripcion</th>
                     <th>accion</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for pais in paises %}
                 <tr>
                     <td scope="row">{{pais.nombre}}</td>
+                    <td scope="row">{{pais.descripcion}}</td>
                     <td>
                         <a href="/borrar_pais/{{pais.id}}" class="btn-btn-danger">Borrar</a>
                     </td>
                 </tr>
                 {%endfor%}
             </tbody>
+
         </table>
 
     </div>
