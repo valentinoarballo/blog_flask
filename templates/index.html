@@ -4,65 +4,39 @@
 Inicio
 {%endblock%}
 
+{% block custom_css %}
+<link rel="stylesheet" href="url_for('../static', filename = 'css/main.css')">
+{% endblock %}
+
 {%block body%}
-<div class="row p-5">
 
-    <div class="col-6">
-        <h3>postea algo</h3>
-        <form action="/agregar_publicacion" method="POST">
-            <label for="autor">nonbre</label>
-            <input class="form-control" type="text" name="autor" placeholder="Jhon Doe">
-            <input class="form-control" type="text" name="descripcion" placeholder="Tengo hambre">
-            <button type="submit" class="btn btn-submit btn-success mt-3">
-                agegar
-            </button>
-        </form>
-    </div>
+<form class="row" action="/agregar_publicacion" method="POST">
+    <input class="form-control my-1 col-10" type="text" name="autor" placeholder="Jhon Doe">
+    <p class="col-2 pt-2 loquierorojo">Nombre</p>
+    <input class="form-control col-10 my-1" type="text" name="descripcion" placeholder="Tengo hambre">
+    <button type="submit" style="font-size: 25px;" class="btn btn-submit btn-success p-0 my-1 mx-3 col-1">➢</button>
+</form>
 
-    <div class="col-6">
 
-        <table class="table">
-
-            <thead>
-                <tr>
-                    <th>post</th>
-                    <th>descripcion</th>
-                    <th>accion</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for publicacion in publicaciones %}
-                <tr>
-                    <td scope="row">{{publicacion.autor}}</td>
-                    <td scope="row">{{publicacion.descripcion}}</td>
-                    <td>
-                        <a href="/borrar_publicacion/{{publicacion.id}}" class="btn-btn-danger">Borrar</a>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-
-        </table>
-
-    </div>
-    <section class="border-bottom mb-3">
-        <p class="text-center"><strong>Comments: 3</strong></p>
-        <div class="row mb-4">
-            <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
-                    class="img-fluid shadow-1-strong rounded-5" alt="" />
+<section class="border-bottom">
+    <hr>
+    <div class="row">
+        {% for publicacion in publicaciones %}
+        <div class="col-12 row my-2">
+            <div class="col-1">
+                <img src="../static/img/gato{{publicacion.id}}.png" class="shadow-1-strong" alt=""
+                    style="height: 75px; width: auto; border-radius: 100%;" />
             </div>
-
-            <div class="col-10">
-                <p class="mb-2"><strong>Marta Dolores</strong></p>
+            <div class="col-11">
+                <p class="mb-2"><strong>{{publicacion.autor}}</strong></p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                    {{publicacion.descripcion}}
                 </p>
+                <a href="/borrar_publicacion/{{publicacion.id}}" class="btn-btn-danger">eliminar comentario</a>
             </div>
+            {% endfor %}
         </div>
-    </section>
-</div>
+    </div>
+</section>
+
 {%endblock%}
