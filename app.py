@@ -73,46 +73,47 @@ def inject_posteos():
 def index():
     return render_template('index.html')
 
+# agregar publicacion
 @app.route('/agregar_publicacion', methods = ["POST"])
 def nuevo_posteo():
     if request.method == "POST": 
-        autor = request.form["autor"]    # llama al retorno del form autor 
+        autor = request.form["autor"] # llama al retorno del form autor 
         descripcion = request.form["descripcion"]
-        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion)   # crea un post asignando nombre del autor y el post en si
-        db.session.add(nuevo_posteo)              # agrega el cambio
-        db.session.commit()                     # lo commitea
-        return redirect(url_for("index"))       # recarga index, hace que todo se actualice de forma automatica
+        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion) # crea un post asignando nombre del autor y el post en si
+        db.session.add(nuevo_posteo) # agrega el cambio
+        db.session.commit() # lo commitea
+        return redirect(url_for("index"))
 
+# eliminar publicacion
 @app.route("/borrar_publicacion/<id>")
 def borrar_publicacion(id):
-    publicacion = Publicacion.query.get(id)   # busca el post que coinsida con el id de la url
-    comentarios_asociados = Comentario.query.filter_by(id_publicacion=id).all()
+    publicacion = Publicacion.query.get(id) # busca el post que coinsida con el id de la url
+    comentarios_asociados = Comentario.query.filter_by(id_publicacion=id).all() # tambien tengo q buscar los comentarios
 
     for comentario_asociado in comentarios_asociados:
-        db.session.delete(comentario_asociado)
+        db.session.delete(comentario_asociado) # borro todos los comentarios de la publicacion
 
-    db.session.delete(publicacion)     # lo borra
-    db.session.commit()         # lo commitea
+    db.session.delete(publicacion) # borra la publicacion
+    db.session.commit() # commitea el cambio
     return redirect(url_for("index"))   
 
 # agregar comentario 
-
 @app.route('/agregar_comentario', methods = ["POST"])
 def nuevo_comentario():
     if request.method == "POST": 
-        autor = request.form["autor"]    # llama al retorno del form autor 
+        autor = request.form["autor"]
         descripcion = request.form["descripcion"]
-        id_publicacion = request.form["id_publicacion"]
-        nuevo_comentario = Comentario(autor=autor, descripcion=descripcion, id_publicacion=id_publicacion)   # crea un post asignando nombre del autor y el post en si
-        db.session.add(nuevo_comentario)              # agrega el cambio
-        db.session.commit()                     # lo commitea
-        return redirect(url_for("index"))       # recarga index, hace que todo se actualice de forma automatica
+        id_publicacion = request.form["id_publicacion"] # recupera la id de la publicacion en la que se comento
+        nuevo_comentario = Comentario(autor=autor, descripcion=descripcion, id_publicacion=id_publicacion) # crea un objeto comentario
+        db.session.add(nuevo_comentario) # lo agrega
+        db.session.commit() # lo commitea
+        return redirect(url_for("index"))
 
 @app.route("/borrar_comentario/<id>")
 def borrar_comentario(id):
-    comentario = Comentario.query.get(id)   # busca el post que coinsida con el id de la url
-    db.session.delete(comentario)     # lo borra
-    db.session.commit()         # lo commitea
+    comentario = Comentario.query.get(id) # busca el post que coinsida con el id de la url
+    db.session.delete(comentario) # lo borra
+    db.session.commit() # lo commitea
     return redirect(url_for("index"))
 
 
