@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/blog'
@@ -20,6 +21,11 @@ class Publicacion(db.Model):
     )
     descripcion = db.Column(
         db.String(100),
+        nullable=False
+    )
+    fecha_hora = db.Column(
+        db.DateTime,
+        default=datetime.now,
         nullable=False
     )
     
