@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(8, 8, 8)!important;
+    color: rgb(255, 255, 255)!important;
+}
+
+.publicacion {
+    border: 1px solid rgb(43, 43, 43)!important;
+}
+
+input {
+    background-color: rgb(8, 8, 8) !important;
+}
+
+.separador-bottom{
+    border-bottom: 1px solid rgb(89, 89, 89)!important;
+}
+
+.separador-top{
+    border-top: 1px solid rgb(89, 89, 89)!important;
+}
+
+img {
+    height: 60px;
+    width: 60px;
+}
+
+/* Estilos personalizados para el acordeón */
+.accordion {
+background-color: rgb(8, 8, 8)!important; /* Fondo negro */
+color: rgb(255, 255, 255)!important; /* Texto blanco */
+}
+
+.accordion .card-header {
+background-color: rgb(8, 8, 8)!important; /* Fondo negro */
+color: rgb(255, 255, 255)!important; /* Texto blanco */
+}
+
+.accordion .card-header:hover {
+background-color: rgb(27, 27, 27)!important; /* Fondo gris oscuro al pasar el mouse */
+}
+
+.accordion .card-body {
+background-color: rgb(8, 8, 8)!important; /* Fondo gris oscuro para el contenido */
+}
