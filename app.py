@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/project_blog'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -28,9 +28,28 @@ class Publicacion(db.Model):
         default=datetime.now,
         nullable=False
     )
+    tema_id = db.Column(
+        db.Integer,
+        db.ForeignKey('tema.id')
+    )
+    tema = db.relationship(
+        'Tema',
+        backref=db.backref('publicaciones', lazy=True)
+        )
+
     
     def __str__(self):
         return self.name
+
+class Tema(db.Model):
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    nombre = db.Column(
+        db.String(50),
+        unique=True
+    )
 
 class Comentario(db.Model):
     __tablename__ = 'comentario'
@@ -64,14 +83,24 @@ class Comentario(db.Model):
 def inject_posteos():
     publicaciones = db.session.query(Publicacion).all()
     comentarios = db.session.query(Comentario).all()
+    temas = db.session.query(Tema).all()
     return  dict(
         publicaciones=publicaciones,  #esto va a estar disponible en todos los templates
-        comentarios=comentarios
+        comentarios=comentarios,
+        temas=temas
     )
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/tendencias')
+def tendencias():
+    return render_template('tendencias.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 # agregar publicacion
 @app.route('/agregar_publicacion', methods = ["POST"])
@@ -79,7 +108,13 @@ def nuevo_posteo():
     if request.method == "POST": 
         autor = request.form["autor"] # llama al retorno del form autor 
         descripcion = request.form["descripcion"]
-        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion) # crea un post asignando nombre del autor y el post en si
+        palabras = descripcion.split()  # Divide la descripción en palabras
+        hashtag = next((palabra for palabra in palabras if palabra.startswith('#')), None) # expresión generadora para encontrar la primera palabra que comienza con '#'
+        tematica = hashtag[1:] if hashtag else None
+        tema = Tema.query.filter_by(nombre=tematica).first()
+        if not tema:
+            tema = Tema(nombre=tematica)
+        nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion, tema=tema) # crea un post asignando nombre del autor y el post en si
         db.session.add(nuevo_posteo) # agrega el cambio
         db.session.commit() # lo commitea
         return redirect(url_for("index"))
@@ -88,12 +123,17 @@ def nuevo_posteo():
 @app.route("/borrar_publicacion/<id>")
 def borrar_publicacion(id):
     publicacion = Publicacion.query.get(id) # busca el post que coinsida con el id de la url
-    comentarios_asociados = Comentario.query.filter_by(id_publicacion=id).all() # tambien tengo q buscar los comentarios
+    tema = publicacion.tema
 
+    comentarios_asociados = Comentario.query.filter_by(id_publicacion=id).all() # tambien tengo q buscar los comentarios
     for comentario_asociado in comentarios_asociados:
         db.session.delete(comentario_asociado) # borro todos los comentarios de la publicacion
 
     db.session.delete(publicacion) # borra la publicacion
+
+    if db.session.query(Publicacion).filter_by(tema_id=tema.id).count() == 0:
+        db.session.delete(tema)
+
     db.session.commit() # commitea el cambio
     return redirect(url_for("index"))   
 
