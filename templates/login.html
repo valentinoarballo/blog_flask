@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{%block title%}
+404
+{%endblock%}
+
+{% block custom_css %}
+<link rel="stylesheet" href="../static/css/login.css">
+{% endblock %}
+
+
+{%block body%}
+
+<section class="text-center mt-4">
+    <form class="form-signin" action="/agregar_usuario" method="POST">
+        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+
+        <label for="inputNombre" class="sr-only">Nombre</label>
+        <input name="nombre" type="text" id="inputNombre" class="form-control my-3" placeholder="nombre" required autofocus>
+
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input name="email" type="email" id="inputEmail" class="form-control my-3" placeholder="Email address" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <input name="password" type="password" id="inputPassword" class="form-control mt-3" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block my-5" type="submit">Login</button>
+    </form>
+</section>
+
+{%endblock%}

@@ -36,8 +36,7 @@ class Publicacion(db.Model):
     tema = db.relationship(
         'Tema',
         backref=db.backref('publicaciones', lazy=True)
-        )
-
+    )
     
     def __str__(self):
         return self.name
@@ -51,6 +50,9 @@ class Tema(db.Model):
         db.String(50),
         unique=True
     )
+
+    def __str__(self):
+        return self.name
 
 class Comentario(db.Model):
     __tablename__ = 'comentario'
@@ -80,6 +82,34 @@ class Comentario(db.Model):
     def __str__(self):
         return self.name
 
+class Usuario(db.Model):
+    __tablename__ = 'Usuario'
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    nombre = db.Column(
+        db.String(100),
+        nullable=False
+    )
+    email = db.Column(
+        db.String(100),
+        nullable=False,
+        unique=True
+    )
+    password = db.Column(
+        db.String(200),
+        nullable=False
+    )
+    fecha_creacion = db.Column(
+        db.DateTime,
+        default=datetime.now,
+        nullable=False
+    )
+
+    def __str__(self):
+        return self.name
+
 @app.context_processor 
 def inject_posteos():
     publicaciones = Publicacion.query.order_by(Publicacion.fecha_hora.desc()).all()
@@ -98,6 +128,10 @@ def index():
 @app.route('/tendencias')
 def tendencias():
     return render_template('tendencias.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -118,6 +152,18 @@ def nuevo_posteo():
             flash('Tu publicacion esta en tendencias!')
         nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion, tema=tema) # crea un post asignando nombre del autor y el post en si
         db.session.add(nuevo_posteo) # agrega el cambio
+        db.session.commit() # lo commitea
+        return redirect(url_for("index"))
+
+# agregar usuario
+@app.route('/agregar_usuario', methods = ["POST"])
+def nuevo_usuario():
+    if request.method == "POST": 
+        nombre = request.form["nombre"] # llama al retorno del form autor 
+        email = request.form["email"]
+        password = request.form["password"]
+        nuevo_usuario = Usuario(nombre=nombre, email=email, password=password) # crea un post asignando nombre del autor y el post en si
+        db.session.add(nuevo_usuario) # agrega el cambio
         db.session.commit() # lo commitea
         return redirect(url_for("index"))
 
