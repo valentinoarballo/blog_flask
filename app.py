@@ -1,10 +1,11 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'clavesecreta123'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/project_blog'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -81,7 +82,7 @@ class Comentario(db.Model):
 
 @app.context_processor 
 def inject_posteos():
-    publicaciones = db.session.query(Publicacion).all()
+    publicaciones = Publicacion.query.order_by(Publicacion.fecha_hora.desc()).all()
     comentarios = db.session.query(Comentario).all()
     temas = db.session.query(Tema).all()
     return  dict(
@@ -114,6 +115,7 @@ def nuevo_posteo():
         tema = Tema.query.filter_by(nombre=tematica).first()
         if not tema:
             tema = Tema(nombre=tematica)
+            flash('Tu publicacion esta en tendencias!')
         nuevo_posteo = Publicacion(autor=autor, descripcion=descripcion, tema=tema) # crea un post asignando nombre del autor y el post en si
         db.session.add(nuevo_posteo) # agrega el cambio
         db.session.commit() # lo commitea
@@ -133,6 +135,8 @@ def borrar_publicacion(id):
 
     if db.session.query(Publicacion).filter_by(tema_id=tema.id).count() == 0:
         db.session.delete(tema)
+
+    flash('Publicacion eliminada.')
 
     db.session.commit() # commitea el cambio
     return redirect(url_for("index"))   
