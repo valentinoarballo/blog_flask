@@ -294,28 +294,29 @@ def nuevo_usuario():
 # eliminar usuario
 @app.route("/borrar_usuario", methods=["POST"])
 def borrar_usuario():
-
+    
     try: 
-        usuario_id = request.form["usuario_id"]
-        usuario = Usuario.query.filter_by(usuario_id).first()
-        print(usuario)
-
-        # publicaciones_relacionadas = Publicacion.query.filter_by(usuario_id=id).all()
-        # comentarios_relacionados = Comentario.query.filter_by(usuario_id=id).all()
-
+        usuario_id = request.form.get('usuario_id')
+        usuario = Usuario.query.get(usuario_id)
         
-        # for comentario in comentarios_relacionados:
-        #     db.session.delete(comentario)
+        if usuario:
+            publicaciones_relacionadas = Publicacion.query.filter_by(usuario_id=usuario_id).all()
+            comentarios_relacionados = Comentario.query.filter_by(usuario_id=usuario_id).all()
+            
+            for comentario in comentarios_relacionados:
+                db.session.delete(comentario)
 
-        # for publicacion in publicaciones_relacionadas:
-        #     db.session.delete(publicacion)
-        
-        flash("Usuario eliminado.", usuario)
-        db.session.delete(usuario)
-        db.session.commit()
+            for publicacion in publicaciones_relacionadas:
+                db.session.delete(publicacion)
+            
+            db.session.delete(usuario)
+            db.session.commit()
+            flash("Usuario eliminado.")
+        else:
+            flash("El usuario no fue encontrado")
 
     except:
-        flash("No hay usuario para borrar.")
+        flash("Error al eliminar el usuario.")
         
     return redirect(url_for("index"))
 

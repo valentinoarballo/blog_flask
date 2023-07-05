@@ -25,17 +25,17 @@ Usuarios
         <div class="card-body bg-black border-grey">
             <p class="card-text">Correo {{usuario.email}}</p>
             <p class="card-text">Cuenta creada el {{usuario.fecha_creacion}}</p>
-            <p class="card-text">id del usuario {{usuario.id}}</p>
+            <p class="card-text">id del usuario {{usuario.id}}</p> <!-- esto funciona -->
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal"data-target="#modalConfirmacion">Eliminar Usuario</button>
+            <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal"data-target="#modalConfirmacion{{ usuario.id }}">Eliminar Usuario</button>
 
             <!-- Modal -->
-            <div class="modal fade custom-bg-blur" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+            <div class="modal fade custom-bg-blur" id="modalConfirmacion{{ usuario.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacion{{ usuario.id }}Label" aria-hidden="true">
                 <div class="modal-dialog bg-black border-grey" role="document">
                     <div class="modal-content bg-black">
                         <div class="modal-header bg-black">
-                            <h5 class="modal-title bg-black" id="modalConfirmacionLabel">Borrar a {{usuario.nombre}}</h5>
+                            <h5 class="modal-title bg-black" id="modalConfirmacion{{ usuario.id }}Label">Borrar a {{usuario.nombre}}</h5> <!-- esto no funciona -->
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -52,7 +52,7 @@ Usuarios
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <form action="/borrar_usuario" method="POST">
-                                <input type="hidden" name="usuario_id" value="{{usuario.id}}">
+                                <input type="hidden" name="usuario_id" value="{{usuario.id}}"> <!-- esto no funciona -->
                                 <button class="btn-submit btn btn-danger my-1" type="submit">Borrar Usuario</button>
                             </form>
                         </div>
