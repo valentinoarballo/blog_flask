@@ -12,11 +12,22 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
+            <li class="nav-item my-2">
                 <a class="nav-link" href="/tendencias">Tendencias</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item my-2 mr-2">
                 <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li>
+                <form class="mx-0 my-2 row p-0" style="width: 30rem;" action="/borrar_usuario" method="POST">
+                    <select class="p-2 col-9 mr-3" name="usuario_id" style="background-color: rgb(8, 8, 8);
+                    color: rgb(255, 255, 255)">
+                        {% for usuario in usuarios %}
+                            <option value="{{usuario.id}}">{{usuario.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn-submit btn btn-outline-danger p-0 col-2" type="submit">borrar</button>
+                </form>
             </li>
         </ul>
     </div>

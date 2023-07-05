@@ -20,10 +20,11 @@ Inicio
 {% endfor %}
 
 <form class="row mx-0 mt-4" action="/agregar_publicacion" method="POST">
-    <div class="col-lg-1 d-flex justify-content-center align-items-center">
-        <span class="text-center">Nombre</span>
-    </div>
-    <input class="form-control my-1 col-lg-11 col-12" type="text" name="autor" placeholder="Jhon Doe">
+    <select class="col-12 p-2 my-2" name="autor" id="select">
+        {% for usuario in usuarios %}
+            <option value="{{usuario.nombre}}">{{usuario.nombre}}</option>
+        {% endfor %}
+    </select>
     <input class="form-control col-10 my-1" type="text" name="descripcion" placeholder="Publica algo">
     <button class="btn-submit btn btn-outline-primary p-0 col-2 my-1" type="submit" style="font-size: 25px;">➢</button>
 </form>
@@ -99,9 +100,15 @@ Inicio
             <form class="row mx-0 w-100" action="/agregar_comentario" method="POST">
                 <input type="hidden" name="id_publicacion" value="{{ publicacion.id }}">
 
-                <input class="form-control col-lg-4 col-12" type="text" name="autor" placeholder="Jhon Doe">
-                <input class="form-control col-lg-6 col-8" type="text" name="descripcion" placeholder="comenta algo">
-                <button class="btn btn-submit btn-outline-primary p-0 col-lg-2 col-4" type="submit" style="font-size: 25px;">➢</button>
+                <select class="col-lg-3 col-12" name="autor" id="select">
+                    {% for usuario in usuarios %}
+                        <option value="{{usuario.nombre}}">{{usuario.nombre}}</option>
+                    {% endfor %}
+                </select>
+
+                <input class="form-control col-lg-7 col-8" type="text" name="descripcion" placeholder="comenta algo">
+
+                <button class="btn btn-submit btn-outline-primary p-0 col-lg-2 col-3" type="submit" style="font-size: 25px;">➢</button>
             </form>
         </div>
         {% endfor %}

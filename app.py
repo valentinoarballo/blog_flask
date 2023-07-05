@@ -115,10 +115,12 @@ def inject_posteos():
     publicaciones = Publicacion.query.order_by(Publicacion.fecha_hora.desc()).all()
     comentarios = db.session.query(Comentario).all()
     temas = db.session.query(Tema).all()
+    usuarios = db.session.query(Usuario).all()
     return  dict(
         publicaciones=publicaciones,  #esto va a estar disponible en todos los templates
         comentarios=comentarios,
-        temas=temas
+        temas=temas,
+        usuarios=usuarios
     )
 
 @app.route('/')
@@ -159,13 +161,29 @@ def nuevo_posteo():
 @app.route('/agregar_usuario', methods = ["POST"])
 def nuevo_usuario():
     if request.method == "POST": 
-        nombre = request.form["nombre"] # llama al retorno del form autor 
+        nombre = request.form["nombre"] 
         email = request.form["email"]
         password = request.form["password"]
-        nuevo_usuario = Usuario(nombre=nombre, email=email, password=password) # crea un post asignando nombre del autor y el post en si
+        nuevo_usuario = Usuario(nombre=nombre, email=email, password=password)
         db.session.add(nuevo_usuario) # agrega el cambio
         db.session.commit() # lo commitea
         return redirect(url_for("index"))
+
+# eliminar usuario
+@app.route("/borrar_usuario", methods=["POST"])
+def borrar_usuario():
+    try: 
+        id = request.form["usuario_id"]
+        flash("Usuario eliminado.")
+        usuario = Usuario.query.get(id) 
+        db.session.delete(usuario) # borra la publicacion
+        db.session.commit() # commitea el cambio
+    except:
+        flash("No hay usuario para borrar.")
+        
+    return redirect(url_for("index"))
+          
+
 
 # eliminar publicacion
 @app.route("/borrar_publicacion/<id>")
