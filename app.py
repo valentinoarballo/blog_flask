@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
 from datetime import datetime
+from random import *
 
 app = Flask(__name__)
 app.secret_key = 'clavesecreta123'
@@ -101,6 +102,10 @@ class Usuario(db.Model):
         db.String(200),
         nullable=False
     )
+    perfil = db.Column(
+        db.String(150),
+        nullable=False
+    )
     fecha_creacion = db.Column(
         db.DateTime,
         default=datetime.now,
@@ -135,6 +140,11 @@ def tendencias():
 def login():
     return render_template('login.html')
 
+
+@app.route('/usuarios')
+def usuarios():
+    return render_template('usuarios.html')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -164,7 +174,9 @@ def nuevo_usuario():
         nombre = request.form["nombre"] 
         email = request.form["email"]
         password = request.form["password"]
-        nuevo_usuario = Usuario(nombre=nombre, email=email, password=password)
+        numero_random = randint(1,17)
+        perfil = f'gato{numero_random}.png'
+        nuevo_usuario = Usuario(nombre=nombre, email=email, password=password, perfil=perfil)
         db.session.add(nuevo_usuario) # agrega el cambio
         db.session.commit() # lo commitea
         return redirect(url_for("index"))
@@ -182,8 +194,6 @@ def borrar_usuario():
         flash("No hay usuario para borrar.")
         
     return redirect(url_for("index"))
-          
-
 
 # eliminar publicacion
 @app.route("/borrar_publicacion/<id>")

@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{%block title%}
+Usuarios
+{%endblock%}
+
+{% block custom_css %}
+<link rel="stylesheet" href="../static/css/usuarios.css">
+{% endblock %}
+
+{%block body%}
+<div class="row m-0 p-0">
+    {% for usuario in usuarios %}
+        <div class="card bg-black border-grey col-3 mt-4 mx-5 p-0">
+            <div class="card-header row m-0 p-0">
+                <div class="col-4">
+                    <img class="shadow-1-strong rounded-circle" src="../static/img/{{usuario.perfil}}" alt="" />
+                </div>
+
+                <div class="col-8 d-flex align-middle">
+                    <p class="m-auto">{{usuario.nombre}}</p>
+                </div>
+            </div>
+
+            <div class="card-body bg-black border-grey">
+                <p class="card-text">Correo {{usuario.email}}</p>
+                <p class="card-text">Cuenta creada el {{usuario.fecha_creacion}}</p>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal" data-target="#modalConfirmacion">
+                    Eliminar Usuario
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade custom-bg-blur" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacionLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog bg-black border-grey" role="document">
+                        <div class="modal-content bg-black">
+                            <div class="modal-header bg-black">
+                                <h5 class="modal-title bg-black" id="modalConfirmacionLabel">ELIMINAR {{usuario.nombre|upper}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                        <path fill="#ffffff" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path fill="#ffffff" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Este usuario sera borrado junto con sus publicaciones. 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/borrar_usuario" method="POST">
+                                    <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+                                    <button class="btn-submit btn btn-danger my-1" type="submit">Borrar Usuario</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{%endblock%}

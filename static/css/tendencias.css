@@ -24,6 +24,12 @@ img {
     width: 60px;
 }
 
+#select{
+    background-color: rgb(8, 8, 8) !important;
+    color: rgb(255, 255, 255)!important;
+    border-radius: 5px!important;
+}
+
 /* Estilos personalizados para el acordeón */
 .accordion {
 background-color: rgb(8, 8, 8)!important; /* Fondo negro */
