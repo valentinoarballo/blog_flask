@@ -4,8 +4,7 @@
 
         <!-- foto de perfil col-md-2 col-sm-2  -->
         <div class="col-md-1 col-2">
-            <img src="../static/img/gato{{ range(1, 18) | random }}.png" class="shadow-1-strong rounded-circle"
-                alt="" />
+            <img class="shadow-1-strong rounded-circle" src="../static/img/{{publicacion.perfil}}" alt="">
         </div>
         <!-- nombre y fecha col-md-9 col-sm-8  -->
         <div class="col-md-10 col-9 d-flex pl-2 pt-3">
@@ -22,8 +21,10 @@
                     d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
             </svg>
         </a>
-        <div class="dropdown-menu bg-dark" aria-labelledby="dropdownId">
-            <a class="btn-btn-danger" href="/borrar_publicacion/{{publicacion.id}}">eliminar</a>
+        <div class="dropdown-menu bg-dark px-0 py-2 m-0" aria-labelledby="dropdownId">
+            <a class="btn-btn-danger w-100 p-0 m-0" href="/borrar_publicacion/{{publicacion.id}}">
+                <center class="p-0 m-0">eliminar</center>
+            </a>
         </div>
 
     </div>
@@ -41,8 +42,7 @@
             <div class="row  m-0 p-0 col-11">
                 <!-- foto de perfil de comentario-->
                 <div class="col-md-1 col-2 my-2">
-                    <img class="shadow-1-strong rounded-circle" src="../static/img/gato{{ range(1, 18) | random }}.png"
-                        alt="" />
+                    <img class="shadow-1-strong rounded-circle" src="../static/img/{{comentario.perfil}}" alt="" />
                 </div>
 
                 <!-- nombre y fecha del comentario-->
@@ -64,9 +64,9 @@
     <form class="row mx-0 w-100" action="/agregar_comentario" method="POST">
         <input type="hidden" name="id_publicacion" value="{{ publicacion.id }}">
 
-        <select class="col-lg-3 col-12" name="autor" id="select">
+        <select class="col-lg-3 col-12" name="usuario_id" id="select">
             {% for usuario in usuarios %}
-                <option value="{{usuario.nombre}}">{{usuario.nombre}}</option>
+                <option value="{{usuario.id}}">{{usuario.nombre}}</option>
             {% endfor %}
         </select>
 

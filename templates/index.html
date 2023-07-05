@@ -20,9 +20,9 @@ Inicio
 {% endfor %}
 
 <form class="row mx-0 mt-4" action="/agregar_publicacion" method="POST">
-    <select class="col-12 p-2 my-2" name="autor" id="select">
+    <select class="col-12 p-2 my-2" name="usuario_id" id="select">
         {% for usuario in usuarios %}
-            <option value="{{usuario.nombre}}">{{usuario.nombre}}</option>
+            <option value="{{usuario.id}}">{{usuario.nombre}}</option>
         {% endfor %}
     </select>
     <input class="form-control col-10 my-1" type="text" name="descripcion" placeholder="Publica algo">
