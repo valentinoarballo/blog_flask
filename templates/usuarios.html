@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{%block title%}
+Usuarios
+{%endblock%}
+
+{% block custom_css %}
+<link rel="stylesheet" href="../static/css/usuarios.css">
+{% endblock %}
+
+{%block body%}
+<div class="row m-0 p-0">
+    {% for usuario in usuarios %}
+        <div class="card bg-secondary col-3 mt-4 mx-3 p-0">
+            <div class="card-header row m-0 p-0">
+                <div class="col-4">
+                    <img class="shadow-1-strong rounded-circle" src="../static/img/{{usuario.perfil}}" alt="" />
+                </div>
+
+                <div class="col-8 d-flex align-middle">
+                    <p class="m-auto">{{usuario.nombre}}</p>
+                </div>
+            </div>
+
+            <div class="card-body bg-secondary">
+                <p class="card-text">Correo {{usuario.email}}</p>
+                <p class="card-text">Cuenta creada el {{usuario.fecha_creacion}}</p>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal" data-target="#modalConfirmacion">
+                    Eliminar Usuario
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade " id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacionLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog bg-secondary" role="document">
+                        <div class="modal-content bg-secondary">
+                            <div class="modal-header bg-secondary">
+                                <h5 class="modal-title bg-secondary" id="modalConfirmacionLabel">ELIMINAR {{usuario.nombre|upper}}</h5>
+                                <button type="button" class="close bg-secondary" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Este usuario sera borrado junto con sus publicaciones. 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/borrar_usuario" method="POST">
+                                    <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+                                    <button class="btn-submit btn btn-danger my-1" type="submit">Borrar Usuario</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{%endblock%}
