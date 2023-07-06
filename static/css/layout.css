@@ -1,0 +1,23 @@
+.bordes-laterales {
+    border-right: 1px solid white !important;
+    border-left: 1px solid white !important;
+}
+
+body {
+    background-color: rgb(8, 8, 8)!important;
+    color: rgb(255, 255, 255)!important;
+}
+
+.separador-bottom{
+    border-bottom: 1px solid rgb(189, 189, 189)!important;
+}
+
+.separador-top{
+    border-top: 1px solid rgb(89, 89, 89)!important;
+}
+
+#select{
+    background-color: rgb(8, 8, 8) !important;
+    color: rgb(255, 255, 255)!important;
+    border-radius: 5px!important;
+}
