@@ -16,27 +16,28 @@ Vas a necesitar XAMPP descargado en tu computadora. Hay que activar los modulos 
 Tambien vas a necesitar una base de datos vacia en el localhost con el nombre de "project_blog"
 <br>
 
-To deploy this project you will need an updated version of Python. First, we will create a virtual enviroment.
+Para ejecutar el proyecto tambien es necesario tener Python 3.10.11 instalado. Hay que crear un entorno virtual, con el siguiente comando. 
 ```bash
   python3 -m venv venv
 ```
 
-Now, we need to activate the virtual enviroment.
-On linux
+Ademas, hay que activarlo.
+En linux
 ```bash
   source venv/bin/activate
 ```
-on Windows,
+En Windows
 ```bash
    dir venv/Scripts/activate
 ```
-Once activated, we need to install Flask, SQL Arlchemy and other libraries:
+
+Una vez activado, hay que instalar Flask, SQL Alchemy y otras librerias, con el siguiente comando. 
 
 ```bash
   pip install -r requirements.txt
 ```
 
-Con el entorno virtual activado, XAMPP activado y la base de datos "project_blog" en localhost, hay que ejecutar los siguientes comandos
+Con la base de datos "project_blog" en localhost, el entorno virtual y XAMPP activado, hay que ejecutar los siguientes comandos
 ```bash
   flask db migrate "001_estructura_tablas"
   flask db upgrade
@@ -46,9 +47,5 @@ and access it through typing [localhost:5000](http://localhost:5000/) in your br
 
 
 ## Authors
-
-- [@Nazareno Bucciarelli](https://github.com/nazabucciarelliITEC)
-- [@Luca Petrocchi](https://github.com/LucaPetrocchi)
-- [@Facundo Lemo](https://github.com/FacundoEsteban-Lemo)
 - [@Valentino Arballo](https://github.com/valentinoarballo)
 
