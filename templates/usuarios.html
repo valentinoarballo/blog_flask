@@ -35,7 +35,6 @@ Usuarios
         <div class="card-body bg-black border-grey">
             <p class="card-text">Correo {{usuario.email}}</p>
             <p class="card-text">Cuenta creada el {{usuario.fecha_creacion}}</p>
-            <p class="card-text">id del usuario {{usuario.id}}</p> <!-- esto funciona -->
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal"data-target="#modalConfirmacion{{ usuario.id }}">Eliminar Usuario</button>
@@ -45,7 +44,7 @@ Usuarios
                 <div class="modal-dialog bg-black border-grey" role="document">
                     <div class="modal-content bg-black">
                         <div class="modal-header bg-black">
-                            <h5 class="modal-title bg-black" id="modalConfirmacion{{ usuario.id }}Label">Borrar a {{usuario.nombre}}</h5> <!-- esto no funciona -->
+                            <h5 class="modal-title bg-black" id="modalConfirmacion{{ usuario.id }}Label">Borrar a {{usuario.nombre}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-x-circle" viewBox="0 0 16 16">

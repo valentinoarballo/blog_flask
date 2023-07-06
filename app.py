@@ -5,6 +5,7 @@ from flask import (Flask,
                     url_for,
                     flash
                 )
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from flask_migrate import Migrate
@@ -13,6 +14,7 @@ from random import *
 
 app = Flask(__name__)
 app.secret_key = 'clavesecreta123'
+
 URI = 'mysql+pymysql://root:@localhost/project_blog'
 app.config['SQLALCHEMY_DATABASE_URI'] = URI
 db = SQLAlchemy(app)
@@ -271,6 +273,7 @@ def nuevo_usuario():
         nombre = request.form["nombre"] 
         email = request.form["email"]
         password = request.form["password"]
+
         numero_random = randint(1,40)
         perfil = f'gato{numero_random}.png'
 
@@ -324,7 +327,11 @@ def borrar_usuario():
                 
                 db.session.delete(publicacion)
                 
-                if db.session.query(Publicacion).filter_by(tema_id=tema.id).count() == 0:
+                if (
+                    db.session.query(Publicacion)
+                    .filter_by(tema_id=tema.id)
+                    .count() == 0
+                ):
                     db.session.delete(tema)
             
             db.session.delete(usuario)
@@ -358,7 +365,11 @@ def borrar_publicacion(id):
     db.session.delete(publicacion)
 
     # si el post borrado era el ultimo qe hablaba de cierto tema, borro el tema
-    if db.session.query(Publicacion).filter_by(tema_id=tema.id).count() == 0:
+    if (
+        db.session.query(Publicacion)
+        .filter_by(tema_id=tema.id)
+        .count() == 0
+    ):
         db.session.delete(tema)
 
     flash('Publicacion eliminada.')
