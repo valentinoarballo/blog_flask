@@ -207,7 +207,7 @@ def tendencias():
 def login():
     return render_template('login.html')
 
-
+# pagina usuarios
 @app.route('/usuarios')
 def usuarios():
     return render_template('usuarios.html')

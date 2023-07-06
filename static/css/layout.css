@@ -1,6 +1,10 @@
 .bordes-laterales {
     border-right: 1px solid white !important;
     border-left: 1px solid white !important;
+    border-bottom: 1px solid white !important;
+    border-radius: 0px 0px 30px 30px;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 body {
