@@ -58,7 +58,7 @@ Una vez activado, debes instalar Flask, SQLAlchemy y otras bibliotecas con el si
 
 Con la base de datos "project_blog" en localhost, el entorno virtual activado y XAMPP ejecutándose, debes ejecutar los siguientes comandos:
 ```bash
-  flask db migrate "001_estructura_tablas"
+  flask db migrate -m "001_estructura_tablas"
   flask db upgrade
   flask run
 ```
