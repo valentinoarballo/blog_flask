@@ -271,7 +271,7 @@ def nuevo_usuario():
         nombre = request.form["nombre"] 
         email = request.form["email"]
         password = request.form["password"]
-        numero_random = randint(1,17)
+        numero_random = randint(1,40)
         perfil = f'gato{numero_random}.png'
 
         nuevo_usuario = Usuario(
@@ -299,15 +299,33 @@ def borrar_usuario():
         usuario_id = request.form.get('usuario_id')
         usuario = Usuario.query.get(usuario_id)
         
+        # 
         if usuario:
-            publicaciones_relacionadas = Publicacion.query.filter_by(usuario_id=usuario_id).all()
-            comentarios_relacionados = Comentario.query.filter_by(usuario_id=usuario_id).all()
+            publicaciones_relacionadas = (Publicacion.query.
+                                        filter_by(usuario_id=usuario_id)
+                                        .all()
+                                    )
+            comentarios_relacionados = (Comentario.query.
+                                        filter_by(usuario_id=usuario_id)
+                                        .all()
+                                    )
             
             for comentario in comentarios_relacionados:
                 db.session.delete(comentario)
 
             for publicacion in publicaciones_relacionadas:
+                tema = publicacion.tema
+                comentarios_asociados = (Comentario.query
+                            .filter_by(id_publicacion=publicacion.id)
+                            .all()
+                        )
+                for comentario_asociado in comentarios_asociados:
+                    db.session.delete(comentario_asociado)
+                
                 db.session.delete(publicacion)
+                
+                if db.session.query(Publicacion).filter_by(tema_id=tema.id).count() == 0:
+                    db.session.delete(tema)
             
             db.session.delete(usuario)
             db.session.commit()
@@ -318,7 +336,7 @@ def borrar_usuario():
     except:
         flash("Error al eliminar el usuario.")
         
-    return redirect(url_for("index"))
+    return redirect(url_for("usuarios"))
 
 # eliminar publicacion
 @app.route("/borrar_publicacion/<id>")
