@@ -12,7 +12,10 @@ Un miniblog hecho con Flask, SQL Alchemy y Bootstrap. Este proyecto es una imple
 6. Registrarse como usuario (No permite emails repetidos, te pedirá que ingreses otro). <br><br>
 7. Borrar un usuario, junto con sus publicaciones, los temas que haya creado y sus comentarios. <br><br>
 
-
+## Problemas que me enfrenté haciendo el proyecto (y dudas)
+1. Trabajé  con mi computadora de escritorio y mi notebook, cuando cambiaba de computadora y pulleaba el proyecto del repo remoto, la forma mas rapida que encontré para que funcionaran las migraciones era no subirlas directamente y hacer un falsk db migrate , flask db upgrade sobre la base de datos vacía, seguro hay alguna forma mas rapida para trabajar con dos localhost diferentes. <br><br>
+2. No creo haber estructurado correctamente el proyecto. Tengo todo el código, incluyendo las tablas de SQLAlchemy, las rutas, la configuración y el context processor, en un solo archivo app.py. También hay otras cuestiones como la secret key o la URI del servidor, que en este caso no importa que se suban a GitHub, pero en un proyecto real, supongo que deberían estar en un archivo aparte, al igual que otras partes del código. <br><br>
+3. Leí por arriba la documentación de Login de Flask y me di cuenta que no lo iba a tener para el viernes si me ponia a hacer un login de verdad, asi que queda pendiente eso... de momento. <br><br>
 ## Set-Up
 Primero, debes clonar el repositorio
 ```bash
