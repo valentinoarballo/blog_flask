@@ -1,54 +1,73 @@
 # Blog en Flask
 
-Un miniblog hecho en flask, SQL Alchemy y Bootstrap
+Un miniblog hecho con Flask, SQL Alchemy y Bootstrap. Este proyecto es una implementación práctica desarrollada como parte de la asignatura de Práctica Profesionalisante. El objetivo principal es crear un sistema web que permita a los usuarios publicar y compartir contenido.
+
+## Caracteristicas principales
+
+1. Crear una publicacion (Te pide crear una cuenta si no hay ninguna) (ojo que se ordenan cronologicamente) <br><br>
+2. Crear tendencias o temas de charla con el uso de #, antes de el tema, por ej. "tomando #mate" crea un tema "Mate" en tendencias <br><br>
+3. Comentar en una publicacion <br><br>
+4. Borrar una publicacion (Elimina los comentarios, y si es el ultimo post hablando de cierto tema, el tema se borra de tendencias) <br><br>
+5. Borrar comentarios <br><br>
+6. Registrarse como usuario (No permite Emails repetidos, te va a pedir que ingreses otro) <br><br>
+7. Borrar un usuario, junto a sus publicaciones, los temas que haya creado y sus comentarios <br><br>
+
 
 ## Set-Up
 Primero hay que clonar el repositorio
 ```bash
   git clone git@github.com:valentinoarballo/blog_flask.git
 ```
+<br><br>
 
 Vas a necesitar XAMPP descargado en tu computadora. Hay que activar los modulos Apache y MySQL. Si estas en linux puedes abrir LAMPP con el siguiente comando
 ```bash
   sudo /opt/lampp/./manager-linux-x64.run
 ```
-
-Tambien vas a necesitar una base de datos vacia en el localhost con el nombre de "project_blog"
+<br>
 <br>
 
-To deploy this project you will need an updated version of Python. First, we will create a virtual enviroment.
+Tambien vas a necesitar una base de datos vacia en el localhost con el nombre de "project_blog"
+
+<br>
+<br>
+
+Para ejecutar el proyecto tambien es necesario tener Python 3.10.11 instalado. Hay que crear un entorno virtual, con el siguiente comando. 
 ```bash
   python3 -m venv venv
 ```
+<br><br>
 
-Now, we need to activate the virtual enviroment.
-On linux
+Ademas, hay que activarlo.<br>
+En linux
 ```bash
   source venv/bin/activate
 ```
-on Windows,
+En Windows
 ```bash
    dir venv/Scripts/activate
 ```
-Once activated, we need to install Flask, SQL Arlchemy and other libraries:
+<br><br>
 
+Una vez activado, hay que instalar Flask, SQL Alchemy y otras librerias, con el siguiente comando. 
 ```bash
   pip install -r requirements.txt
 ```
 
-Con el entorno virtual activado, XAMPP activado y la base de datos "project_blog" en localhost, hay que ejecutar los siguientes comandos
+<br><br>
+
+Con la base de datos "project_blog" en localhost, el entorno virtual y XAMPP activado, hay que ejecutar los siguientes comandos
 ```bash
   flask db migrate "001_estructura_tablas"
   flask db upgrade
   flask run
 ```
-and access it through typing [localhost:5000](http://localhost:5000/) in your browser
+
+<br><br>
+
+Puedes ver el proyecto corriendo en [localhost:5000](http://localhost:5000/)
 
 
-## Authors
-
-- [@Nazareno Bucciarelli](https://github.com/nazabucciarelliITEC)
-- [@Luca Petrocchi](https://github.com/LucaPetrocchi)
-- [@Facundo Lemo](https://github.com/FacundoEsteban-Lemo)
+## Autor
 - [@Valentino Arballo](https://github.com/valentinoarballo)
 
